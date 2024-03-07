@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <div class="container">
+
+        <div class="head">
+            <p>Country and population</p>
+        </div>
+
+       <div class="input-fild">
+        <input type="text" placeholder="Country"/>
+        <button id="search">Search</button>
+
+       </div>
+
+       <div id="show-info">
+        <p id="p1"></p>
+       </div>
+
+       
+    </div>
+    
+        
+    
+</body>
+
+    <script>
+        let countries=[];
+        const jsfile='./country-by-population.json'
+      
+        
+        fetch(jsfile)
+            .then((data)=>{
+                return data.json();
+            })
+            .then((jdata)=>{
+                 return countries.push(...jdata)
+                
+                
+            })
+
+
+        
+
+            function findMatches(wordMatch,countries){
+                return countries.filter((place)=>{
+
+                    const regex=new RegExp(wordMatch,'gi')
+
+
+                    return place.country.match(regex)
+
+                    
+                })
+            }
+            
+
+            let inp=document.querySelector('input');
+            let btn=document.querySelector('#search')
+            let show_info=document.querySelector('#show-info')
+
+            btn.addEventListener('click',(e)=>{
+                
+                let information=findMatches(inp.value,countries)
+                // console.log(information[0]);
+                // console.log(information[0].country);
+                // show_info.innerHTML=information[0].country
+                
+                
+                document.querySelector('#p1').innerHTML=`Country:-${information[0].country} || Population :-${information[0].population}`
+
+            })
+
+            // inp.addEventListener('change',displayMatch)
+            // inp.addEventListener('keyup',displayMatch)
+
+            // function displayMatch(){
+            //     let information=findMatches(inp.value,countries)
+                
+            //     const html =information.map(place=>{
+            //         return `
+
+            //         <p>Country:-${place.country} || Population :-${place.population}</p>
+            //         `;
+            //     }).join('')
+
+            //     show_info.innerHTML=html
+            // }
+
+                
+ 
+
+                    
+
+            
+
+           
+        
+
+
+   
+
+
+    </script>
+</html>
